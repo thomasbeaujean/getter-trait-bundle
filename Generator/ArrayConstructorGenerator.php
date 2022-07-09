@@ -26,16 +26,15 @@ class ArrayConstructorGenerator
 
         $collections = [];
 
-        $properties = $this->extractor->getProperties($reflectionClass->getName());
-
-        foreach ($properties as $property) {
-            $types = $this->extractor->getTypes($reflectionClass->getName(), $property);
+        foreach ($reflectionClass->getProperties() as $property) {
+            $propertyName = $property->getName();
+            $types = $this->extractor->getTypes($reflectionClass->getName(), $propertyName);
             /** @var Type $type */
             foreach ($types as $type) {
                 if (!$type->isCollection()) {
                     continue;
                 }
-                $collections[] = '$this->'.$property.' = [];';
+                $collections[] = '$this->'.$propertyName.' = [];';
             }
         }
 

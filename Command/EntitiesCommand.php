@@ -28,10 +28,8 @@ class EntitiesCommand extends Command
 
         /** @var ReflectionClass $reflectionClass */
         foreach ($classes as $class => $reflectionClass) {
-            $properties = $this->extractor->getProperties($reflectionClass->getName());
-
-            foreach ($properties as $property) {
-                $types = $this->extractor->getTypes($class, $property);
+            foreach ($reflectionClass->getProperties() as $property) {
+                $types = $this->extractor->getTypes($class, $property->getName());
             }
 
             $this->entityGenerator->writeEntityClass($reflectionClass, $types);

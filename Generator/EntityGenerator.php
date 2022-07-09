@@ -126,17 +126,17 @@ namespace <namespace>;
         $addGenerator = new AddGenerator();
         $removeGenerator = new RemoveGenerator();
 
-        $properties = $this->extractor->getProperties($reflectionClass->getName());
-        foreach ($properties as $property) {
-            $types = $this->extractor->getTypes($reflectionClass->getName(), $property);
+        foreach ($reflectionClass->getProperties() as $property) {
+            $propertyName = $property->getName();
+            $types = $this->extractor->getTypes($reflectionClass->getName(), $propertyName);
 
             // getter setter
             foreach ($types as $type) {
-                if (!$this->hasMethod($reflectionClass, $setGenerator->getMethodName($property))) {
-                    $methods[] = $setGenerator->generate($property, $type);
+                if (!$this->hasMethod($reflectionClass, $setGenerator->getMethodName($propertyName))) {
+                    $methods[] = $setGenerator->generate($propertyName, $type);
                 }
-                if (!$this->hasMethod($reflectionClass, $getGenerator->getMethodName($property))) {
-                    $methods[] = $getGenerator->generate($property, $type);
+                if (!$this->hasMethod($reflectionClass, $getGenerator->getMethodName($propertyName))) {
+                    $methods[] = $getGenerator->generate($propertyName, $type);
                 }
             }
 
@@ -146,13 +146,13 @@ namespace <namespace>;
                     continue;
                 }
 
-                if (!$this->hasMethod($reflectionClass, $addGenerator->getMethodName($property))) {
+                if (!$this->hasMethod($reflectionClass, $addGenerator->getMethodName($propertyName))) {
                     $elementType = $type->getCollectionValueTypes()[0];
-                    $methods[] = $addGenerator->generate($reflectionClass->getShortName(), $property, $elementType);
+                    $methods[] = $addGenerator->generate($reflectionClass->getShortName(), $propertyName, $elementType);
                 }
-                if (!$this->hasMethod($reflectionClass, $removeGenerator->getMethodName($property))) {
+                if (!$this->hasMethod($reflectionClass, $removeGenerator->getMethodName($propertyName))) {
                     $elementType = $type->getCollectionValueTypes()[0];
-                    $methods[] = $removeGenerator->generate($property, $elementType);
+                    $methods[] = $removeGenerator->generate($propertyName, $elementType);
                 }
             }
         }
