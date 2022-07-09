@@ -1,0 +1,12 @@
+{
+    "name": "tbn/getter-trait-bundle",
+    "type": "symfony-bundle",
+    "autoload": {
+        "psr-4": { "tbn\\GetterTraitBundle\\": "" }
+    },
+    "license": "MIT",
+    "require": {
+        "php": ">=8.0",
+        "symfony/framework-bundle": ">=6.0"
+    }
+}

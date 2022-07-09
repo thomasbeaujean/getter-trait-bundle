@@ -1,0 +1,22 @@
+services:
+    tbn\GetterTraitBundle\Command\EntitiesCommand:
+        public: true
+        class: "tbn\\GetterTraitBundle\\Command\\EntitiesCommand"
+        arguments:
+            - '@Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface'
+            - '@tbn\GetterTraitBundle\Generator\EntityGenerator'
+        tags:
+            - { name: 'console.command', command: 'generate:getter:traits' }
+
+    tbn\GetterTraitBundle\Generator\EntityGenerator:
+        public: true
+        class: "tbn\\GetterTraitBundle\\Generator\\EntityGenerator"
+        arguments:
+            - '@Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface'
+            - '@tbn\GetterTraitBundle\Generator\ArrayConstructorGenerator'
+
+    tbn\GetterTraitBundle\Generator\ArrayConstructorGenerator:
+        public: true
+        class: "tbn\\GetterTraitBundle\\Generator\\ArrayConstructorGenerator"
+        arguments:
+            - '@Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface'
