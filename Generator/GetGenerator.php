@@ -8,6 +8,9 @@ class GetGenerator extends AbstractPropertyGenerator
 {
     private static string $template =
     '
+    /**
+     * <dockblock>
+     */
     public function <methodName>(): <nullable><type>
     {
         return $this-><fieldName>;
@@ -22,9 +25,18 @@ class GetGenerator extends AbstractPropertyGenerator
     public function generate(string $fieldName, Type $type): string
     {
         $methodName = $this->getMethodName($fieldName);
+        $dockblock = '';
+
+        $convertedType = $this->convertType($type);
+
+        if ($convertedType === 'array') {
+            $valueType = $type->getCollectionValueTypes()[0];
+            $dockblock = $this->getDockblock($valueType);
+        }
 
         $replacements = [
-            '<type>' => $this->convertType($type),
+            '<dockblock>' => $dockblock,
+            '<type>' => $convertedType,
             '<methodName>' => $methodName,
             '<fieldName>' => $fieldName,
             '<nullable>' => ($type->isNullable() ? '?':'')
@@ -37,5 +49,21 @@ class GetGenerator extends AbstractPropertyGenerator
         );
 
         return $method;
+    }
+
+    private function getDockblock(Type $valueType): string
+    {
+        $nullString = '';
+        if($valueType->isNullable()) {
+            $nullString = '?';
+        }
+
+        if ($valueType->getBuiltinType() === 'object') {
+            $itemType = $valueType->getClassName();
+            return sprintf('@var %s\%s[]', $nullString, $itemType);
+        }
+
+        $itemType = $valueType->getBuiltinType();
+        return sprintf('@var %s%s[]', $nullString, $itemType);
     }
 }
