@@ -23,7 +23,7 @@ namespace <namespace>;
     ) {
     }
 
-    private function generateEntityClass(ReflectionClass $reflectionClass, array $types): string
+    private function generateEntityClass(ReflectionClass $reflectionClass, array $types, bool $useBody = true): string
     {
         $placeHolders = [
             '<namespace>',
@@ -34,8 +34,11 @@ namespace <namespace>;
         $replacements = [
             $reflectionClass->getNamespaceName(),
             $this->generateEntityClassName($reflectionClass),
-            $this->generateEntityBody($reflectionClass, $types),
         ];
+
+        if ($useBody) {
+            $replacements[] = $this->generateEntityBody($reflectionClass, $types);
+        }
 
         return str_replace($placeHolders, $replacements, static::$classTemplate);
     }
@@ -43,6 +46,16 @@ namespace <namespace>;
     public function writeEntityClass(ReflectionClass $reflectionClass, array $types): void
     {
         $content = $this->generateEntityClass($reflectionClass, $types);
+        $content = $this->removeTrailingSpacesAndTab($content);
+        $cleanedContent = $this->removeDoubleEndLine($content);
+
+        $targetFileName = $this->getTraitFileName($reflectionClass->getFileName());
+        file_put_contents($targetFileName, $cleanedContent);
+    }
+
+    public function purgeTrait(ReflectionClass $reflectionClass): void
+    {
+        $content = $this->generateEntityClass($reflectionClass, [], false);
         $content = $this->removeTrailingSpacesAndTab($content);
         $cleanedContent = $this->removeDoubleEndLine($content);
 
@@ -68,16 +81,6 @@ namespace <namespace>;
     {
         if (!($reflectionClass->hasMethod($method))) {
             // neither the class nor the trait
-            return false;
-        }
-
-        // get the trait reflexion
-        $traitClass = $reflectionClass->getNamespaceName().'/'.$reflectionClass->getShortName().'Trait';
-        $traitReflexion =  new ReflectionClass(str_replace("/", "\\",$traitClass));
-
-        if ($traitReflexion->hasMethod($method)) {
-            // the trait have the method
-            // so the class does not own it
             return false;
         }
 

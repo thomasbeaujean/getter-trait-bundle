@@ -7,7 +7,14 @@ services:
             - '@tbn\GetterTraitBundle\Generator\EntityGenerator'
         tags:
             - { name: 'console.command', command: 'generate:getter:traits' }
-
+    tbn\GetterTraitBundle\Command\PurgeCommand:
+        public: true
+        class: "tbn\\GetterTraitBundle\\Command\\PurgeCommand"
+        arguments:
+            - '@Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface'
+            - '@tbn\GetterTraitBundle\Generator\EntityGenerator'
+        tags:
+            - { name: 'console.command', command: 'generate:getter:purge' }
     tbn\GetterTraitBundle\Generator\EntityGenerator:
         public: true
         class: "tbn\\GetterTraitBundle\\Generator\\EntityGenerator"
