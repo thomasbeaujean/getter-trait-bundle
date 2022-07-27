@@ -34,6 +34,11 @@ class ArrayConstructorGenerator
                 if (!$type->isCollection()) {
                     continue;
                 }
+
+                if ($type->isNullable()) {
+                    continue;
+                }
+
                 $collections[] = '$this->'.$propertyName.' = [];';
             }
         }
