@@ -39,7 +39,12 @@ class ArrayConstructorGenerator
                     continue;
                 }
 
-                $collections[] = '$this->'.$propertyName.' = [];';
+                $initString = '[]';
+                if ($type->getBuiltinType() === 'object' && $type->getClassName() === 'Doctrine\Common\Collections\Collection') {
+                    $initString = 'new \\Doctrine\\Common\\Collections\\ArrayCollection()';
+                }
+
+                $collections[] = '$this->'.$propertyName.' = '.$initString.';';
             }
         }
 
