@@ -53,16 +53,6 @@ namespace <namespace>;
         file_put_contents($targetFileName, $cleanedContent);
     }
 
-    public function purgeTrait(ReflectionClass $reflectionClass): void
-    {
-        $content = $this->generateEntityClass($reflectionClass, [], false);
-        $content = $this->removeTrailingSpacesAndTab($content);
-        $cleanedContent = $this->removeDoubleEndLine($content);
-
-        $targetFileName = $this->getTraitFileName($reflectionClass->getFileName());
-        file_put_contents($targetFileName, $cleanedContent);
-    }
-
     private function getTraitFileName(string $originFileName): string
     {
         // remove .php
@@ -92,7 +82,7 @@ namespace <namespace>;
         $arrayConstructorContent = $this->doctrineConstructorGenerator->generate($reflectionClass, $types);
 
         $content = $arrayConstructorContent;
-        if ($arrayConstructorContent !== '' && !$this->hasMethod($reflectionClass, '__construct')) {
+        if ($arrayConstructorContent !== '') {
             $content .= "\n";
             $constructorGenerator = new ConstructorGenerator();
             $content .= $constructorGenerator->generate();
@@ -135,12 +125,8 @@ namespace <namespace>;
 
             // getter setter
             foreach ($types as $type) {
-                if (!$this->hasMethod($reflectionClass, $setGenerator->getMethodName($propertyName))) {
-                    $methods[] = $setGenerator->generate($propertyName, $type);
-                }
-                if (!$this->hasMethod($reflectionClass, $getGenerator->getMethodName($propertyName))) {
-                    $methods[] = $getGenerator->generate($propertyName, $type);
-                }
+                $methods[] = $setGenerator->generate($propertyName, $type);
+                $methods[] = $getGenerator->generate($propertyName, $type);
             }
 
             // array add remove
@@ -149,14 +135,11 @@ namespace <namespace>;
                     continue;
                 }
 
-                if (!$this->hasMethod($reflectionClass, $addGenerator->getMethodName($propertyName))) {
-                    $elementType = $type->getCollectionValueTypes()[0];
-                    $methods[] = $addGenerator->generate($reflectionClass->getShortName(), $propertyName, $elementType);
-                }
-                if (!$this->hasMethod($reflectionClass, $removeGenerator->getMethodName($propertyName))) {
-                    $elementType = $type->getCollectionValueTypes()[0];
-                    $methods[] = $removeGenerator->generate($propertyName, $elementType);
-                }
+                $elementType = $type->getCollectionValueTypes()[0];
+                $methods[] = $addGenerator->generate($reflectionClass->getShortName(), $propertyName, $elementType);
+
+                $elementType = $type->getCollectionValueTypes()[0];
+                $methods[] = $removeGenerator->generate($propertyName, $elementType);
             }
         }
 
