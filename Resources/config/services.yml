@@ -1,9 +1,15 @@
 services:
+    tbn\GetterTraitBundle\Generator\ReflectionExtractor:
+        public: true
+        class: "tbn\\GetterTraitBundle\\Generator\\ReflectionExtractor"
+        arguments:
+            - "@property_info.phpstan_extractor"
+
     tbn\GetterTraitBundle\Command\EntitiesCommand:
         public: true
         class: "tbn\\GetterTraitBundle\\Command\\EntitiesCommand"
         arguments:
-            - '@Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface'
+            - '@tbn\GetterTraitBundle\Generator\ReflectionExtractor'
             - '@tbn\GetterTraitBundle\Generator\EntityGenerator'
         tags:
             - { name: 'console.command', command: 'generate:getter:traits' }
@@ -11,11 +17,11 @@ services:
         public: true
         class: "tbn\\GetterTraitBundle\\Generator\\EntityGenerator"
         arguments:
-            - '@Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface'
+            - '@tbn\GetterTraitBundle\Generator\ReflectionExtractor'
             - '@tbn\GetterTraitBundle\Generator\ArrayConstructorGenerator'
 
     tbn\GetterTraitBundle\Generator\ArrayConstructorGenerator:
         public: true
         class: "tbn\\GetterTraitBundle\\Generator\\ArrayConstructorGenerator"
         arguments:
-            - '@Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface'
+            - '@tbn\GetterTraitBundle\Generator\ReflectionExtractor'

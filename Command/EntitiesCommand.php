@@ -9,13 +9,13 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface;
+use tbn\GetterTraitBundle\Generator\ReflectionExtractor;
 
 #[AsCommand(name: 'generate:getter:traits')]
 class EntitiesCommand extends Command
 {
     public function __construct(
-        private PropertyInfoExtractorInterface $extractor,
+        private ReflectionExtractor $extractor,
         private EntityGenerator $entityGenerator
     ) {
         parent::__construct();

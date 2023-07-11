@@ -3,7 +3,6 @@
 namespace tbn\GetterTraitBundle\Generator;
 
 use ReflectionClass;
-use Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface;
 use Symfony\Component\PropertyInfo\Type;
 
 class ArrayConstructorGenerator
@@ -16,7 +15,7 @@ class ArrayConstructorGenerator
     }
 ';
 
-    public function __construct(private PropertyInfoExtractorInterface $extractor)
+    public function __construct(private ReflectionExtractor $extractor)
     {
     }
 

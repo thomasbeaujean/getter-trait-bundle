@@ -3,7 +3,7 @@
 namespace tbn\GetterTraitBundle\Generator;
 
 use ReflectionClass;
-use Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface;
+use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
 
 class EntityGenerator
 {
@@ -18,7 +18,7 @@ namespace <namespace>;
 ';
 
     public function __construct(
-        private PropertyInfoExtractorInterface $extractor,
+        private PropertyTypeExtractorInterface $extractor,
         private ArrayConstructorGenerator $doctrineConstructorGenerator
     ) {
     }
@@ -65,16 +65,6 @@ namespace <namespace>;
     private function generateEntityClassName(ReflectionClass $reflectionClass): string
     {
         return 'trait '.$reflectionClass->getShortName().'Trait';
-    }
-
-    private function hasMethod(ReflectionClass $reflectionClass, string $method): bool
-    {
-        if (!($reflectionClass->hasMethod($method))) {
-            // neither the class nor the trait
-            return false;
-        }
-
-        return true;
     }
 
     private function generateEntityConstructor(ReflectionClass $reflectionClass, array $types): string
