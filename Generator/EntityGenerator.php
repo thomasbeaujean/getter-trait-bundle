@@ -2,6 +2,7 @@
 
 namespace tbn\GetterTraitBundle\Generator;
 
+use Monolog\Logger;
 use ReflectionClass;
 use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
 
@@ -18,8 +19,9 @@ namespace <namespace>;
 ';
 
     public function __construct(
+        private Logger $logger,
         private PropertyTypeExtractorInterface $extractor,
-        private ArrayConstructorGenerator $doctrineConstructorGenerator
+        private ArrayConstructorGenerator $doctrineConstructorGenerator,
     ) {
     }
 
@@ -45,6 +47,7 @@ namespace <namespace>;
 
     public function writeEntityClass(ReflectionClass $reflectionClass, array $types): void
     {
+        $this->logger->info('ENTITY: '.$reflectionClass->getName());
         $content = $this->generateEntityClass($reflectionClass, $types);
         $content = $this->removeTrailingSpacesAndTab($content);
         $cleanedContent = $this->removeDoubleEndLine($content);
@@ -111,6 +114,7 @@ namespace <namespace>;
 
         foreach ($reflectionClass->getProperties() as $property) {
             $propertyName = $property->getName();
+            $this->logger->info('PROPERTY: '.$propertyName);
             $types = $this->extractor->getTypes($reflectionClass->getName(), $propertyName);
 
             // getter setter

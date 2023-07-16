@@ -17,6 +17,7 @@ services:
         public: true
         class: "tbn\\GetterTraitBundle\\Generator\\EntityGenerator"
         arguments:
+            - '@logger'
             - '@tbn\GetterTraitBundle\Generator\ReflectionExtractor'
             - '@tbn\GetterTraitBundle\Generator\ArrayConstructorGenerator'
 
