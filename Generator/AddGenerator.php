@@ -19,7 +19,9 @@ class AddGenerator extends AbstractPropertyGenerator
 
     public function getMethodName(string $fieldName): string
     {
-        return 'add'.ucfirst(end($this->inflector->singularize($fieldName)));
+        $values = $this->inflector->singularize($fieldName);
+
+        return 'add'.ucfirst(end($values));
     }
 
     public function generate(string $entityName, string $property, Type $type): string
