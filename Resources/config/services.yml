@@ -9,10 +9,15 @@ services:
         public: true
         class: "tbn\\GetterTraitBundle\\Command\\EntitiesCommand"
         arguments:
-            - '@tbn\GetterTraitBundle\Generator\ReflectionExtractor'
-            - '@tbn\GetterTraitBundle\Generator\EntityGenerator'
+            - '@tbn\GetterTraitBundle\Generator\Generator'
         tags:
             - { name: 'console.command', command: 'generate:getter:traits' }
+    tbn\GetterTraitBundle\Generator\Generator:
+        public: true
+        class: "tbn\\GetterTraitBundle\\Generator\\Generator"
+        arguments:
+            - '@tbn\GetterTraitBundle\Generator\ReflectionExtractor'
+            - '@tbn\GetterTraitBundle\Generator\EntityGenerator'
     tbn\GetterTraitBundle\Generator\EntityGenerator:
         public: true
         class: "tbn\\GetterTraitBundle\\Generator\\EntityGenerator"

@@ -16,9 +16,7 @@ class RemoveGenerator extends AbstractPropertyGenerator
 
     public function getMethodName(string $fieldName): string
     {
-        $methodName = 'remove'.$this->inflector->classify($fieldName);
-
-        return $this->inflector->singularize($methodName);
+        return 'remove'.ucfirst(end($this->inflector->singularize($fieldName)));
     }
 
     public function generate(string $property, Type $type): string

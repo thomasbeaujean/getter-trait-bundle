@@ -2,7 +2,7 @@
 
 namespace tbn\GetterTraitBundle\Generator;
 
-use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use ReflectionClass;
 use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
 
@@ -19,7 +19,7 @@ namespace <namespace>;
 ';
 
     public function __construct(
-        private Logger $logger,
+        private LoggerInterface $logger,
         private PropertyTypeExtractorInterface $extractor,
         private ArrayConstructorGenerator $doctrineConstructorGenerator,
     ) {

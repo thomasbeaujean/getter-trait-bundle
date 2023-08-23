@@ -16,7 +16,7 @@ class SetGenerator extends AbstractPropertyGenerator
 
     public function getMethodName(string $fieldName): string
     {
-        return 'set'.$this->inflector->classify($fieldName);
+        return 'set'.ucfirst($fieldName);
     }
 
     public function generate(string $fieldName, Type $type): string
