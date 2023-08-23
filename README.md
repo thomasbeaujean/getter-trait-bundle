@@ -14,13 +14,6 @@ Having only the redefined method allows to spot the method with business purpose
 composer require --dev "tbn/getter-trait-bundle"
 ```
 
-In `config/packages/dev/services.yaml`, import bundles services
-```yaml
-imports:
-  - { resource: "../../../vendor/tbn/getter-trait-bundle/Resources/config/services.yml" }
-```
-
-
 In `config/bundles.php`, add the bundle to the dev environment
 ```php
 return [
@@ -64,3 +57,7 @@ class MyClass
 ## I need to redefine the method
 
 Just copy/paste the generated code inside your class and update it to your needs.
+
+# More examples
+
+[Example folder](./tests/src/Entity)

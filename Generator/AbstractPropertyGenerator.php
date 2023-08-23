@@ -2,17 +2,16 @@
 
 namespace tbn\GetterTraitBundle\Generator;
 
-use Doctrine\Inflector\Inflector;
-use Doctrine\Inflector\InflectorFactory;
 use Symfony\Component\PropertyInfo\Type;
+use Symfony\Component\String\Inflector\EnglishInflector;
 
 abstract class AbstractPropertyGenerator
 {
-    protected Inflector $inflector;
+    protected EnglishInflector $inflector;
 
     public function __construct()
     {
-        $this->inflector = InflectorFactory::create()->build();
+        $this->inflector = new EnglishInflector();
     }
 
     protected function convertType(Type $type): string

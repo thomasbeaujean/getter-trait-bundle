@@ -19,7 +19,7 @@ class GetGenerator extends AbstractPropertyGenerator
 
     public function getMethodName(string $fieldName): string
     {
-        return 'get'.$this->inflector->classify($fieldName);
+        return 'get'.ucfirst($fieldName);
     }
 
     public function generate(string $fieldName, Type $type): string
