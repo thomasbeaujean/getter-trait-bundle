@@ -30,8 +30,11 @@ class GetGenerator extends AbstractPropertyGenerator
         $convertedType = $this->convertType($type);
 
         if ($convertedType === 'array') {
-            $valueType = $type->getCollectionValueTypes()[0];
-            $dockblock = $this->getDockblock($valueType);
+            $types = $type->getCollectionValueTypes();
+            if (count($types) > 0) {
+                $valueType = $type->getCollectionValueTypes()[0];
+                $dockblock = $this->getDockblock($valueType);
+            }
         }
 
         $replacements = [
