@@ -129,11 +129,15 @@ namespace <namespace>;
                     continue;
                 }
 
-                $elementType = $type->getCollectionValueTypes()[0];
-                $methods[] = $addGenerator->generate($reflectionClass->getShortName(), $propertyName, $elementType);
+                $types = $type->getCollectionValueTypes();
 
-                $elementType = $type->getCollectionValueTypes()[0];
-                $methods[] = $removeGenerator->generate($propertyName, $elementType);
+                if (count($types) > 0) {
+                    $elementType = $type->getCollectionValueTypes()[0];
+                    $methods[] = $addGenerator->generate($reflectionClass->getShortName(), $propertyName, $elementType);
+
+                    $elementType = $type->getCollectionValueTypes()[0];
+                    $methods[] = $removeGenerator->generate($propertyName, $elementType);
+                }
             }
         }
 
