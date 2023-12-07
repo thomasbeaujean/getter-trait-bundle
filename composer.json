@@ -7,14 +7,14 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "symfony/framework-bundle": "^6.0",
+        "symfony/framework-bundle": "^6.0|^7.0",
         "phpdocumentor/type-resolver": "^1.4",
-        "symfony/property-info": "^6.0"
+        "symfony/property-info": "^6.0|^7.0"
     },
     "require-dev": {
         "nyholm/symfony-bundle-test": "^2.0",
         "phpunit/phpunit": "^10.3",
-        "symfony/uid": "^6.0",
+        "symfony/uid": "^6.0|^7.0",
         "doctrine/collections": "^2.1"
     },
     "autoload-dev": {
