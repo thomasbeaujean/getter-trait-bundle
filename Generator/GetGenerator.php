@@ -63,10 +63,10 @@ class GetGenerator extends AbstractPropertyGenerator
 
         if ($valueType->getBuiltinType() === 'object') {
             $itemType = $valueType->getClassName();
-            return sprintf('@var %s\%s[]', $nullString, $itemType);
+            return sprintf('@return %s\%s[]', $nullString, $itemType);
         }
 
         $itemType = $valueType->getBuiltinType();
-        return sprintf('@var %s%s[]', $nullString, $itemType);
+        return sprintf('@return %s%s[]', $nullString, $itemType);
     }
 }
