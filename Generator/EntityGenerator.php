@@ -117,6 +117,11 @@ namespace <namespace>;
             $this->logger->info('PROPERTY: '.$propertyName);
             $types = $this->extractor->getTypes($reflectionClass->getName(), $propertyName);
 
+            // the mixed type gives a null value
+            if (null === $types) {
+                continue;
+            }
+
             // getter setter
             foreach ($types as $type) {
                 $methods[] = $setGenerator->generate($propertyName, $type);

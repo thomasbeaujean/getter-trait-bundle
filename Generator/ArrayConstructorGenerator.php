@@ -28,6 +28,10 @@ class ArrayConstructorGenerator
         foreach ($reflectionClass->getProperties() as $property) {
             $propertyName = $property->getName();
             $types = $this->extractor->getTypes($reflectionClass->getName(), $propertyName);
+
+            if (null === $types) {
+                continue;
+            }
             /** @var Type $type */
             foreach ($types as $type) {
                 if (!$type->isCollection()) {
