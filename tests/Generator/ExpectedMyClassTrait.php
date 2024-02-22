@@ -81,7 +81,7 @@ trait MyClassTrait
     }
 
     /**
-     * @var int[]
+     * @return int[]
      */
     public function getReferences(): array
     {
