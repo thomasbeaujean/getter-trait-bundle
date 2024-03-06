@@ -1,13 +1,13 @@
 <?php
 
-namespace tbn\GetterTraitBundle\Tests\Generator;
+namespace Tbn\GetterTraitBundle\Tests\Generator;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Nyholm\BundleTest\TestKernel;
 use Acme\Service\Foo;
 use Symfony\Component\HttpKernel\KernelInterface;
-use tbn\GetterTraitBundle\Generator\EntityGenerator;
-use tbn\GetterTraitBundle\Generator\Generator;
+use Tbn\GetterTraitBundle\Generator\EntityGenerator;
+use Tbn\GetterTraitBundle\Generator\Generator;
 
 class GeneratorTest extends KernelTestCase
 {
@@ -23,7 +23,7 @@ class GeneratorTest extends KernelTestCase
          */
 
         $kernel = parent::createKernel($options);
-        $kernel->addTestBundle(\tbn\GetterTraitBundle\GetterTraitBundle::class);
+        $kernel->addTestBundle(\Tbn\GetterTraitBundle\GetterTraitBundle::class);
         $kernel->handleOptions($options);
 
         return $kernel;

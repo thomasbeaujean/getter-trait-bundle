@@ -1,6 +1,6 @@
 <?php
 
-namespace tbn\GetterTraitBundle\Generator;
+namespace Tbn\GetterTraitBundle\Generator;
 
 use Symfony\Component\PropertyInfo\Type;
 use Symfony\Component\String\Inflector\EnglishInflector;

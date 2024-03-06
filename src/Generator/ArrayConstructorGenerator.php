@@ -1,6 +1,6 @@
 <?php
 
-namespace tbn\GetterTraitBundle\Generator;
+namespace Tbn\GetterTraitBundle\Generator;
 
 use ReflectionClass;
 use Symfony\Component\PropertyInfo\Type;

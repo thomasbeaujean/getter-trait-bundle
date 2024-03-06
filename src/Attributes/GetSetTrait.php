@@ -1,6 +1,6 @@
 <?php
 
-namespace tbn\GetterTraitBundle\Attributes;
+namespace Tbn\GetterTraitBundle\Attributes;
 
 use Attribute;
 

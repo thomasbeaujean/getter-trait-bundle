@@ -2,7 +2,14 @@
     "name": "tbn/getter-trait-bundle",
     "type": "symfony-bundle",
     "autoload": {
-        "psr-4": { "tbn\\GetterTraitBundle\\": "" }
+        "psr-4": {
+            "Tbn\\GetterTraitBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tbn\\GetterTraitBundle\\Tests\\": "tests/"
+        }
     },
     "license": "MIT",
     "require": {
@@ -16,10 +23,5 @@
         "phpunit/phpunit": "^10.3",
         "symfony/uid": "^6.0|^7.0",
         "doctrine/collections": "^2.1"
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "tbn\\GetterTraitBundle\\Tests\\": "tests/"
-        }
     }
 }
