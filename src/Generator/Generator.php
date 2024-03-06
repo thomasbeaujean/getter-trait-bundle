@@ -1,11 +1,11 @@
 <?php
 
-namespace tbn\GetterTraitBundle\Generator;
+namespace Tbn\GetterTraitBundle\Generator;
 
 use ReflectionClass;
-use tbn\GetterTraitBundle\Attributes\AnnotationCollectionFactory;
-use tbn\GetterTraitBundle\Generator\EntityGenerator;
-use tbn\GetterTraitBundle\Generator\ReflectionExtractor;
+use Tbn\GetterTraitBundle\Attributes\AnnotationCollectionFactory;
+use Tbn\GetterTraitBundle\Generator\EntityGenerator;
+use Tbn\GetterTraitBundle\Generator\ReflectionExtractor;
 
 class Generator
 {

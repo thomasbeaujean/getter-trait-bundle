@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tbn\GetterTraitBundle\DependencyInjection;
+namespace Tbn\GetterTraitBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

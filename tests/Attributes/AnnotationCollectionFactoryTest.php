@@ -1,11 +1,11 @@
 <?php
 
-namespace tbn\GetterTraitBundle\Tests\Attributes;
+namespace Tbn\GetterTraitBundle\Tests\Attributes;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use tbn\GetterTraitBundle\Attributes\AnnotationCollectionFactory;
-use tbn\GetterTraitBundle\Attributes\GetSetTrait;
-use tbn\GetterTraitBundle\Tests\src\Entity\MyClass;
+use Tbn\GetterTraitBundle\Attributes\AnnotationCollectionFactory;
+use Tbn\GetterTraitBundle\Attributes\GetSetTrait;
+use Tbn\GetterTraitBundle\Tests\src\Entity\MyClass;
 
 class AnnotationCollectionFactoryTest extends KernelTestCase
 {

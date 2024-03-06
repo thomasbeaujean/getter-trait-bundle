@@ -1,5 +1,5 @@
 <?php
-namespace tbn\GetterTraitBundle\Tests\src\Entity;
+namespace Tbn\GetterTraitBundle\Tests\src\Entity;
 trait ForeignClassTrait
 {
 
@@ -16,7 +16,7 @@ trait ForeignClassTrait
         return $this->id;
     }
 
-    public function setMyClass(?\tbn\GetterTraitBundle\Tests\src\Entity\MyClass $value): void
+    public function setMyClass(?\Tbn\GetterTraitBundle\Tests\src\Entity\MyClass $value): void
     {
         $this->myClass = $value;
     }
@@ -24,7 +24,7 @@ trait ForeignClassTrait
     /**
      *
      */
-    public function getMyClass(): ?\tbn\GetterTraitBundle\Tests\src\Entity\MyClass
+    public function getMyClass(): ?\Tbn\GetterTraitBundle\Tests\src\Entity\MyClass
     {
         return $this->myClass;
     }

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace tbn\GetterTraitBundle\Attributes;
+namespace Tbn\GetterTraitBundle\Attributes;
 
 class AnnotationCollectionFactory
 {

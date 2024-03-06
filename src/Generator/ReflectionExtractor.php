@@ -1,6 +1,6 @@
 <?php
 
-namespace tbn\GetterTraitBundle\Generator;
+namespace Tbn\GetterTraitBundle\Generator;
 
 use Symfony\Component\PropertyInfo\Extractor\PhpStanExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor as ExtractorReflectionExtractor;

@@ -1,6 +1,6 @@
 <?php
 
-namespace tbn\GetterTraitBundle;
+namespace Tbn\GetterTraitBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

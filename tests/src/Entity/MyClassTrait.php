@@ -1,5 +1,5 @@
 <?php
-namespace tbn\GetterTraitBundle\Tests\src\Entity;
+namespace Tbn\GetterTraitBundle\Tests\src\Entity;
 trait MyClassTrait
 {
     public function arrayConstruct()
@@ -65,12 +65,12 @@ trait MyClassTrait
         return $this->foreignClasses;
     }
 
-    public function addForeignClass(\tbn\GetterTraitBundle\Tests\src\Entity\ForeignClass $value): void
+    public function addForeignClass(\Tbn\GetterTraitBundle\Tests\src\Entity\ForeignClass $value): void
     {
         $this->foreignClasses[] = $value;
     }
 
-    public function removeForeignClass(\tbn\GetterTraitBundle\Tests\src\Entity\ForeignClass $value): void
+    public function removeForeignClass(\Tbn\GetterTraitBundle\Tests\src\Entity\ForeignClass $value): void
     {
         $this->foreignClasses = array_diff($this->foreignClasses, $value);
     }
