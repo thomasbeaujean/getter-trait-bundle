@@ -18,6 +18,9 @@ abstract class AbstractPropertyGenerator
     {
         switch ($type->getBuiltinType()) {
             case 'object':
+                if (is_null($type->getClassName())) {
+                    return 'object';
+                }
                 return '\\'.$type->getClassName();
         }
 
