@@ -72,7 +72,7 @@ trait MyClassTrait
 
     public function removeForeignClass(\Tbn\GetterTraitBundle\Tests\src\Entity\ForeignClass $value): void
     {
-        $this->foreignClasses = array_diff($this->foreignClasses, $value);
+        $this->foreignClasses = array_diff($this->foreignClasses, [$value]);
     }
 
     public function setReferences(array $value): void
@@ -95,6 +95,6 @@ trait MyClassTrait
 
     public function removeReference(int $value): void
     {
-        $this->references = array_diff($this->references, $value);
+        $this->references = array_diff($this->references, [$value]);
     }
 }

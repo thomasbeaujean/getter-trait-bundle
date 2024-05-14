@@ -10,7 +10,7 @@ class RemoveGenerator extends AbstractPropertyGenerator
     '
     public function <methodName>(<type> $value): void
     {
-        $this-><fieldName> = array_diff($this-><fieldName>, $value);
+        $this-><fieldName> = array_diff($this-><fieldName>, [$value]);
     }
 ';
 
