@@ -10,7 +10,7 @@ class RemoveGenerator extends AbstractPropertyGenerator
     '
     public function <methodName>(<type> $value): void
     {
-        $this-><fieldName> = array_diff($this-><fieldName>, [$value]);
+        $this-><fieldName> = array_diff($this-><fieldName>, <valueDiff>);
     }
 ';
 
@@ -25,10 +25,13 @@ class RemoveGenerator extends AbstractPropertyGenerator
     {
         $methodName = $this->getMethodName($property);
 
+        $methodType = $this->convertType($type);
+
         $replacements = [
-            '<type>' => $this->convertType($type),
+            '<type>' => $methodType,
             '<methodName>' => $methodName,
             '<fieldName>' => $property,
+            '<valueDiff>' => $methodType === 'array' ? '$value' : '[$value]',
         ];
 
         $method = str_replace(
