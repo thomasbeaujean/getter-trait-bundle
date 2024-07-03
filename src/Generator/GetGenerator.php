@@ -2,20 +2,26 @@
 
 namespace Tbn\GetterTraitBundle\Generator;
 
-use Symfony\Component\PropertyInfo\Type;
+use Symfony\Component\TypeInfo\Type;
+use Symfony\Component\TypeInfo\Type\CollectionType;
 
-class GetGenerator extends AbstractPropertyGenerator
+class GetGenerator
 {
     private static string $template =
     '
     /**
      * <dockblock>
      */
-    public function <methodName>(): <nullable><type>
+    public function <methodName>(): <type>
     {
         return $this-><fieldName>;
     }
 ';
+
+    public function __construct(
+        private TypeConverter $typeConverter,
+    ) {
+    }
 
     public function getMethodName(string $fieldName): string
     {
@@ -27,14 +33,15 @@ class GetGenerator extends AbstractPropertyGenerator
         $methodName = $this->getMethodName($fieldName);
         $dockblock = '';
 
-        $convertedType = $this->convertType($type);
+        $convertedType = $this->typeConverter->convertType($type);
 
-        if ($convertedType === 'array') {
-            $types = $type->getCollectionValueTypes();
-            if (count($types) > 0) {
-                $valueType = $type->getCollectionValueTypes()[0];
-                $dockblock = $this->getDockblock($valueType);
-            }
+        if ($type instanceof CollectionType) {
+            $initString = $type->__toString();
+            $initString = str_replace(',App', ',\\App', $initString);
+            $initString = str_replace(',Tbn', ',\\Tbn', $initString);
+            $initString = str_replace('Doctrine', '\\Doctrine', $initString);
+
+            $dockblock = "@return $initString";
         }
 
         $replacements = [
@@ -42,7 +49,6 @@ class GetGenerator extends AbstractPropertyGenerator
             '<type>' => $convertedType,
             '<methodName>' => $methodName,
             '<fieldName>' => $fieldName,
-            '<nullable>' => ($type->isNullable() ? '?':'')
         ];
 
         $method = str_replace(
@@ -52,21 +58,5 @@ class GetGenerator extends AbstractPropertyGenerator
         );
 
         return $method;
-    }
-
-    private function getDockblock(Type $valueType): string
-    {
-        $nullString = '';
-        if($valueType->isNullable()) {
-            $nullString = '?';
-        }
-
-        if ($valueType->getBuiltinType() === 'object') {
-            $itemType = $valueType->getClassName();
-            return sprintf('@return %s\%s[]', $nullString, $itemType);
-        }
-
-        $itemType = $valueType->getBuiltinType();
-        return sprintf('@return %s%s[]', $nullString, $itemType);
     }
 }

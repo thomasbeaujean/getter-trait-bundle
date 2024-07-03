@@ -3,7 +3,7 @@
 namespace Tbn\GetterTraitBundle\Generator;
 
 use ReflectionClass;
-use Symfony\Component\PropertyInfo\Type;
+use Symfony\Component\TypeInfo\Type\CollectionType;
 
 class ArrayConstructorGenerator
 {
@@ -15,8 +15,10 @@ class ArrayConstructorGenerator
     }
 ';
 
-    public function __construct(private ReflectionExtractor $extractor)
-    {
+    public function __construct(
+        private Extractor $extractor,
+        private TypeConverter $typeConverter,
+    ) {
     }
 
     public function generate(ReflectionClass $reflectionClass): string
@@ -27,28 +29,28 @@ class ArrayConstructorGenerator
 
         foreach ($reflectionClass->getProperties() as $property) {
             $propertyName = $property->getName();
-            $types = $this->extractor->getTypes($reflectionClass->getName(), $propertyName);
+            $type = $this->extractor->getType($reflectionClass->getName(), $propertyName);
 
-            if (null === $types) {
+            if (null === $type) {
                 continue;
             }
-            /** @var Type $type */
-            foreach ($types as $type) {
-                if (!$type->isCollection()) {
-                    continue;
-                }
-
-                if ($type->isNullable()) {
-                    continue;
-                }
-
-                $initString = '[]';
-                if ($type->getBuiltinType() === 'object' && $type->getClassName() === 'Doctrine\Common\Collections\Collection') {
-                    $initString = 'new \\Doctrine\\Common\\Collections\\ArrayCollection()';
-                }
-
-                $collections[] = '$this->'.$propertyName.' = '.$initString.';';
+            if ($type->isNullable()) {
+                continue;
             }
+
+            if (! ($type instanceof CollectionType)) {
+                continue;
+            }
+
+            $converted = $this->typeConverter->convertType($type);
+
+            $initString = match ($converted) {
+                'array' => '[]',
+                '\Doctrine\Common\Collections\Collection' => 'new \Doctrine\Common\Collections\ArrayCollection()',
+                default => 'new '.$converted.'()',
+            };
+
+            $collections[] = '$this->'.$propertyName.' = '.$initString.';';
         }
 
         if (count($collections) > 0) {

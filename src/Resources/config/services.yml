@@ -1,10 +1,53 @@
 services:
-    Tbn\GetterTraitBundle\Generator\ReflectionExtractor:
+    Tbn\GetterTraitBundle\Generator\AddGenerator:
         public: true
-        class: "Tbn\\GetterTraitBundle\\Generator\\ReflectionExtractor"
+        class: "Tbn\\GetterTraitBundle\\Generator\\AddGenerator"
         arguments:
-            - "@property_info.phpstan_extractor"
+            - '@Tbn\GetterTraitBundle\Generator\TypeConverter'
+    Tbn\GetterTraitBundle\Generator\ArrayConstructorGenerator:
+        public: true
+        class: "Tbn\\GetterTraitBundle\\Generator\\ArrayConstructorGenerator"
+        arguments:
+            - '@Tbn\GetterTraitBundle\Generator\Extractor'
+            - '@Tbn\GetterTraitBundle\Generator\TypeConverter'
+    Tbn\GetterTraitBundle\Generator\EntityGenerator:
+        public: true
+        class: "Tbn\\GetterTraitBundle\\Generator\\EntityGenerator"
+        arguments:
+            - '@logger'
+            - '@Tbn\GetterTraitBundle\Generator\Extractor'
+            - '@Tbn\GetterTraitBundle\Generator\ArrayConstructorGenerator'
+            - '@Tbn\GetterTraitBundle\Generator\GetGenerator'
+            - '@Tbn\GetterTraitBundle\Generator\SetGenerator'
+            - '@Tbn\GetterTraitBundle\Generator\AddGenerator'
+            - '@Tbn\GetterTraitBundle\Generator\RemoveGenerator'
+    Tbn\GetterTraitBundle\Generator\Generator:
+        public: true
+        class: "Tbn\\GetterTraitBundle\\Generator\\Generator"
+        arguments:
+            - '@Tbn\GetterTraitBundle\Generator\EntityGenerator'
+    Tbn\GetterTraitBundle\Generator\GetGenerator:
+        public: true
+        class: "Tbn\\GetterTraitBundle\\Generator\\GetGenerator"
+        arguments:
+            - '@Tbn\GetterTraitBundle\Generator\TypeConverter'
 
+    Tbn\GetterTraitBundle\Generator\RemoveGenerator:
+        public: true
+        class: "Tbn\\GetterTraitBundle\\Generator\\RemoveGenerator"
+        arguments:
+            - '@Tbn\GetterTraitBundle\Generator\TypeConverter'
+    Tbn\GetterTraitBundle\Generator\SetGenerator:
+        public: true
+        class: "Tbn\\GetterTraitBundle\\Generator\\SetGenerator"
+        arguments:
+            - '@Tbn\GetterTraitBundle\Generator\TypeConverter'
+    Tbn\GetterTraitBundle\Generator\TypeConverter:
+        public: true
+        class: "Tbn\\GetterTraitBundle\\Generator\\TypeConverter"
+    Tbn\GetterTraitBundle\Generator\Extractor:
+        public: true
+        class: "Tbn\\GetterTraitBundle\\Generator\\Extractor"
     Tbn\GetterTraitBundle\Command\EntitiesCommand:
         public: true
         class: "Tbn\\GetterTraitBundle\\Command\\EntitiesCommand"
@@ -12,22 +55,3 @@ services:
             - '@Tbn\GetterTraitBundle\Generator\Generator'
         tags:
             - { name: 'console.command', command: 'generate:getter:traits' }
-    Tbn\GetterTraitBundle\Generator\Generator:
-        public: true
-        class: "Tbn\\GetterTraitBundle\\Generator\\Generator"
-        arguments:
-            - '@Tbn\GetterTraitBundle\Generator\ReflectionExtractor'
-            - '@Tbn\GetterTraitBundle\Generator\EntityGenerator'
-    Tbn\GetterTraitBundle\Generator\EntityGenerator:
-        public: true
-        class: "Tbn\\GetterTraitBundle\\Generator\\EntityGenerator"
-        arguments:
-            - '@logger'
-            - '@Tbn\GetterTraitBundle\Generator\ReflectionExtractor'
-            - '@Tbn\GetterTraitBundle\Generator\ArrayConstructorGenerator'
-
-    Tbn\GetterTraitBundle\Generator\ArrayConstructorGenerator:
-        public: true
-        class: "Tbn\\GetterTraitBundle\\Generator\\ArrayConstructorGenerator"
-        arguments:
-            - '@Tbn\GetterTraitBundle\Generator\ReflectionExtractor'

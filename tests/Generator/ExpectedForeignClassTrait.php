@@ -16,7 +16,7 @@ trait ForeignClassTrait
         return $this->id;
     }
 
-    public function setMyClass(?\Tbn\GetterTraitBundle\Tests\src\Entity\MyClass $value): void
+    public function setMyClass(\Tbn\GetterTraitBundle\Tests\src\Entity\MyClass|null $value): void
     {
         $this->myClass = $value;
     }
@@ -24,7 +24,7 @@ trait ForeignClassTrait
     /**
      *
      */
-    public function getMyClass(): ?\Tbn\GetterTraitBundle\Tests\src\Entity\MyClass
+    public function getMyClass(): \Tbn\GetterTraitBundle\Tests\src\Entity\MyClass|null
     {
         return $this->myClass;
     }

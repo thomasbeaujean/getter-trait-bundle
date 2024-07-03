@@ -2,10 +2,15 @@
 
 namespace Tbn\GetterTraitBundle\Generator;
 
-use Symfony\Component\PropertyInfo\Type;
+use Symfony\Component\String\Inflector\EnglishInflector;
+use Symfony\Component\TypeInfo\Type\BuiltinType;
+use Symfony\Component\TypeInfo\Type\CollectionType;
+use Symfony\Component\TypeInfo\Type\GenericType;
 
-class AddGenerator extends AbstractPropertyGenerator
+class AddGenerator
 {
+    private EnglishInflector $inflector;
+
     private static string $beginTemplate =
     '
     public function <methodName>(<type> $value): void
@@ -17,6 +22,13 @@ class AddGenerator extends AbstractPropertyGenerator
     }
 ';
 
+    public function __construct(
+        private TypeConverter $typeConverter,
+
+    ) {
+        $this->inflector = new EnglishInflector();
+    }
+
     public function getMethodName(string $fieldName): string
     {
         $values = $this->inflector->singularize($fieldName);
@@ -24,12 +36,27 @@ class AddGenerator extends AbstractPropertyGenerator
         return 'add'.ucfirst(end($values));
     }
 
-    public function generate(string $entityName, string $property, Type $type): string
-    {
+    public function generate(
+        string $entityName,
+        string $property,
+        CollectionType $type,
+    ): string {
         $methodName = $this->getMethodName($property);
 
+        $fieldType = match($type->getType()::class) {
+            BuiltinType::class =>
+                /** @var BuiltinType $type */
+                 $type->__toString(),
+            GenericType::class =>
+                /** @var GenericType $type */
+                $this->typeConverter->convertType($type->getType()->getVariableTypes()[1]),
+            default =>
+                /** @var GenericType $type */
+                'mixed',
+        };
+
         $replacements = [
-            '<type>' => $this->convertType($type),
+            '<type>' => $fieldType,
             '<methodName>' => $methodName,
             '<fieldName>' => $property,
             '<entityName>' => ucfirst($entityName)
