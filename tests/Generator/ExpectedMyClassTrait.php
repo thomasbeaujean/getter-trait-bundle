@@ -58,7 +58,7 @@ trait MyClassTrait
     }
 
     /**
-     *
+     * @return \Doctrine\Common\Collections\Collection<int|string,\Tbn\GetterTraitBundle\Tests\src\Entity\ForeignClass>
      */
     public function getForeignClasses(): \Doctrine\Common\Collections\Collection
     {
@@ -81,7 +81,7 @@ trait MyClassTrait
     }
 
     /**
-     * @return int[]
+     * @return array<int,int>
      */
     public function getReferences(): array
     {

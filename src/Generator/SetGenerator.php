@@ -2,17 +2,22 @@
 
 namespace Tbn\GetterTraitBundle\Generator;
 
-use Symfony\Component\PropertyInfo\Type;
+use Symfony\Component\TypeInfo\Type;
 
-class SetGenerator extends AbstractPropertyGenerator
+class SetGenerator
 {
     private static string $template =
     '
-    public function <methodName>(<nullable><type> $value): void
+    public function <methodName>(<type> $value): void
     {
         $this-><fieldName> = $value;
     }
 ';
+
+    public function __construct(
+        private TypeConverter $typeConverter,
+    ) {
+    }
 
     public function getMethodName(string $fieldName): string
     {
@@ -24,10 +29,9 @@ class SetGenerator extends AbstractPropertyGenerator
         $methodName = $this->getMethodName($fieldName);
 
         $replacements = [
-            '<type>' => $this->convertType($type),
+            '<type>' => $this->typeConverter->convertType($type),
             '<methodName>' => $methodName,
             '<fieldName>' => $fieldName,
-            '<nullable>' => ($type->isNullable() ? '?':'')
         ];
 
         $method = str_replace(

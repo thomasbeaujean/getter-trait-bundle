@@ -50,6 +50,9 @@ class GeneratorTest extends KernelTestCase
         $expectedForeignClassTrait = \file_get_contents(__DIR__.'/Expected'.$filename.'.php');
         $foreignClassTrait = \file_get_contents(__DIR__.'/../src/Entity/'.$filename.'.php');
 
+        // line kept for dev purpose
+        // file_put_contents(__DIR__.'/Expected'.$filename.'.php', $foreignClassTrait);
+
         $this->assertSame($expectedForeignClassTrait, $foreignClassTrait);
     }
 }
