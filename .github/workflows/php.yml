@@ -13,7 +13,7 @@ jobs:
       matrix:
         operating-system: [ ubuntu-latest ]
         php: [ '8.2' ]
-        symfony: ['7.1.*']
+        symfony: ['7.2.*']
 
     steps:
       - uses: actions/checkout@main
