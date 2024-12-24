@@ -8,6 +8,7 @@ use Symfony\Component\TypeInfo\Type\BuiltinType;
 use Symfony\Component\TypeInfo\Type\CollectionType;
 use Symfony\Component\TypeInfo\Type\EnumType;
 use Symfony\Component\TypeInfo\Type\GenericType;
+use Symfony\Component\TypeInfo\Type\NullableType;
 use Symfony\Component\TypeInfo\Type\ObjectType;
 use Symfony\Component\TypeInfo\Type\UnionType;
 
@@ -43,13 +44,16 @@ class TypeConverter
             case CollectionType::class:
                 /** @var CollectionType $type */
                 if ($type->isList()) {
-                    return $this->convertType($type->getType());
+                    return $this->convertType($type->getWrappedType());
                 }
 
-                return $this->convertType($type->getType());
+                return $this->convertType($type->getWrappedType());
             case GenericType::class:
                 /** @var GenericType $type */
-                return $this->convertType($type->getType());
+                return $this->convertType($type->getWrappedType());
+            case NullableType::class:
+                /** @var NullableType $type */
+                return $this->convertType($type->getWrappedType()).'|null';
         }
 
         throw new \LogicException('Class '.$type::class.' not handled');

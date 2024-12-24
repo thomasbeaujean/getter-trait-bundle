@@ -43,13 +43,13 @@ class AddGenerator
     ): string {
         $methodName = $this->getMethodName($property);
 
-        $fieldType = match($type->getType()::class) {
+        $fieldType = match($type->getWrappedType()::class) {
             BuiltinType::class =>
                 /** @var BuiltinType $type */
                  $type->__toString(),
             GenericType::class =>
                 /** @var GenericType $type */
-                $this->typeConverter->convertType($type->getType()->getVariableTypes()[1]),
+                $this->typeConverter->convertType($type->getWrappedType()->getVariableTypes()[1]),
             default =>
                 /** @var GenericType $type */
                 'mixed',
