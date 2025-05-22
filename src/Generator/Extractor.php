@@ -15,7 +15,11 @@ class Extractor
     ) {
         // a full list of extractors is shown further below
         $phpDocExtractor = new PhpDocExtractor();
-        $reflectionExtractor = new ReflectionExtractor();
+        $reflectionExtractor = new ReflectionExtractor(
+            mutatorPrefixes: [],
+            accessorPrefixes: [],
+            arrayMutatorPrefixes: [],
+        );
 
         $listExtractors = [$reflectionExtractor];
         $typeExtractors = [$phpDocExtractor, $reflectionExtractor];
