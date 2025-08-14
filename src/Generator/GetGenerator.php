@@ -4,14 +4,12 @@ namespace Tbn\GetterTraitBundle\Generator;
 
 use Symfony\Component\TypeInfo\Type;
 use Symfony\Component\TypeInfo\Type\CollectionType;
+use Symfony\Component\TypeInfo\Type\GenericType;
 
 class GetGenerator
 {
     private static string $template =
-    '
-    /**
-     * <dockblock>
-     */
+    '<dockblock>
     public function <methodName>(): <type>
     {
         return $this-><fieldName>;
@@ -42,7 +40,11 @@ class GetGenerator
             $initString = str_replace('Doctrine', '\\Doctrine', $initString);
             $initString = str_replace('Symfony', '\\Symfony', $initString);
 
-            $dockblock = "@return $initString";
+            $dockblock = <<< EOT
+    /**
+     * @return $initString
+     */
+ EOT;
         }
 
         $replacements = [

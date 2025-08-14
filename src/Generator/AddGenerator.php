@@ -6,6 +6,7 @@ use Symfony\Component\String\Inflector\EnglishInflector;
 use Symfony\Component\TypeInfo\Type\BuiltinType;
 use Symfony\Component\TypeInfo\Type\CollectionType;
 use Symfony\Component\TypeInfo\Type\GenericType;
+use Symfony\Component\TypeInfo\Type\ObjectType;
 
 class AddGenerator
 {
@@ -17,8 +18,14 @@ class AddGenerator
     {';
 
     private static string $endTemplate =
-    '
+        '
         $this-><fieldName>[] = $value;
+    }
+';
+
+    private static string $endTemplateForDoctrineCollection =
+        '
+        $this-><fieldName>->add($value);
     }
 ';
 
@@ -55,6 +62,14 @@ class AddGenerator
                 'mixed',
         };
 
+        if ($type->getWrappedType() instanceof GenericType
+            && $type->getWrappedType()->getWrappedType() instanceof ObjectType
+            && $type->getWrappedType()->getWrappedType()->getClassName() === 'Doctrine\Common\Collections\Collection') {
+            $selectedEndTemplate = static::$endTemplateForDoctrineCollection;
+        } else {
+            $selectedEndTemplate = static::$endTemplate;
+        }
+
         $replacements = [
             '<type>' => $fieldType,
             '<methodName>' => $methodName,
@@ -71,7 +86,7 @@ class AddGenerator
         $method .= str_replace(
             array_keys($replacements),
             array_values($replacements),
-            static::$endTemplate
+            $selectedEndTemplate
         );
 
         return $method;
