@@ -2,7 +2,8 @@
 
 namespace Tbn\GetterTraitBundle\Generator;
 
-use Symfony\Component\String\Inflector\EnglishInflector;
+use Doctrine\Inflector\Inflector;
+use Doctrine\Inflector\InflectorFactory;
 use Symfony\Component\TypeInfo\Type\BuiltinType;
 use Symfony\Component\TypeInfo\Type\CollectionType;
 use Symfony\Component\TypeInfo\Type\GenericType;
@@ -10,7 +11,7 @@ use Symfony\Component\TypeInfo\Type\ObjectType;
 
 class RemoveGenerator
 {
-    private EnglishInflector $inflector;
+    private Inflector $inflector;
 
     private static string $template =
         '
@@ -31,14 +32,14 @@ class RemoveGenerator
     public function __construct(
         private TypeConverter $typeConverter,
     ) {
-        $this->inflector = new EnglishInflector();
+        $this->inflector = InflectorFactory::create()->build();
     }
 
     public function getMethodName(string $fieldName): string
     {
-        $values = $this->inflector->singularize($fieldName);
+        $singular = $this->inflector->singularize($fieldName);
 
-        return 'remove'.ucfirst(end($values));
+        return 'remove'.ucfirst($singular);
     }
 
     public function generate(

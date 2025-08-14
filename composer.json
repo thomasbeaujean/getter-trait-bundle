@@ -24,6 +24,7 @@
         "nyholm/symfony-bundle-test": "^3.0",
         "phpunit/phpunit": "^10.3",
         "symfony/uid": "^7.2",
-        "doctrine/collections": "^2.1"
+        "doctrine/collections": "^2.1",
+        "doctrine/inflector": "^2.0"
     }
 }
