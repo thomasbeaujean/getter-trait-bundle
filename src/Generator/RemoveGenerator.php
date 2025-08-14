@@ -6,16 +6,25 @@ use Symfony\Component\String\Inflector\EnglishInflector;
 use Symfony\Component\TypeInfo\Type\BuiltinType;
 use Symfony\Component\TypeInfo\Type\CollectionType;
 use Symfony\Component\TypeInfo\Type\GenericType;
+use Symfony\Component\TypeInfo\Type\ObjectType;
 
 class RemoveGenerator
 {
     private EnglishInflector $inflector;
 
     private static string $template =
-    '
+        '
     public function <methodName>(<type> $value): void
     {
         $this-><fieldName> = array_diff($this-><fieldName>, [$value]);
+    }
+';
+
+    private static string $templateForDoctrineCollection =
+    '
+    public function <methodName>(<type> $value): void
+    {
+        $this-><fieldName>->removeElement($value);
     }
 ';
 
@@ -50,6 +59,14 @@ class RemoveGenerator
                 'mixed',
         };
 
+        if ($type->getWrappedType() instanceof GenericType
+            && $type->getWrappedType()->getWrappedType() instanceof ObjectType
+            && $type->getWrappedType()->getWrappedType()->getClassName() === 'Doctrine\Common\Collections\Collection') {
+            $selectedTemplate = static::$templateForDoctrineCollection;
+        } else {
+            $selectedTemplate = static::$template;
+        }
+
         $replacements = [
             '<type>' => $fieldType,
             '<methodName>' => $methodName,
@@ -59,7 +76,7 @@ class RemoveGenerator
         $method = str_replace(
             array_keys($replacements),
             array_values($replacements),
-            static::$template
+            $selectedTemplate
         );
 
         return $method;
