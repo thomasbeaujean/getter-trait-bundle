@@ -41,9 +41,9 @@ class GetGenerator
             $initString = str_replace('Symfony', '\\Symfony', $initString);
 
             $dockblock = <<< EOT
-    /**
-     * @return $initString
-     */
+     /**
+      * @return $initString
+      */
  EOT;
         }
 
