@@ -18,9 +18,6 @@ trait MyClassTrait
         $this->id = $value;
     }
 
-    /**
-     *
-     */
     public function getId(): \Symfony\Component\Uid\Uuid
     {
         return $this->id;
@@ -31,9 +28,6 @@ trait MyClassTrait
         $this->number = $value;
     }
 
-    /**
-     *
-     */
     public function getNumber(): int
     {
         return $this->number;
@@ -44,9 +38,6 @@ trait MyClassTrait
         $this->name = $value;
     }
 
-    /**
-     *
-     */
     public function getName(): string
     {
         return $this->name;
@@ -67,12 +58,12 @@ trait MyClassTrait
 
     public function addForeignClass(\Tbn\GetterTraitBundle\Tests\src\Entity\ForeignClass $value): void
     {
-        $this->foreignClasses[] = $value;
+        $this->foreignClasses->add($value);
     }
 
     public function removeForeignClass(\Tbn\GetterTraitBundle\Tests\src\Entity\ForeignClass $value): void
     {
-        $this->foreignClasses = array_diff($this->foreignClasses, [$value]);
+        $this->foreignClasses->removeElement($value);
     }
 
     public function setReferences(array $value): void

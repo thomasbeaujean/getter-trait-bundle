@@ -8,9 +8,6 @@ trait ForeignClassTrait
         $this->id = $value;
     }
 
-    /**
-     *
-     */
     public function getId(): \Symfony\Component\Uid\Uuid
     {
         return $this->id;
@@ -21,9 +18,6 @@ trait ForeignClassTrait
         $this->myClass = $value;
     }
 
-    /**
-     *
-     */
     public function getMyClass(): \Tbn\GetterTraitBundle\Tests\src\Entity\MyClass|null
     {
         return $this->myClass;
