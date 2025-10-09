@@ -26,15 +26,17 @@ class TypeConverter
             case UnionType::class:
                 /** @var UnionType $type */
                 $types = $type->getTypes();
-                $str = '';
-                foreach ($types as $index => $subType) {
-                    $str .= $this->convertType($subType);
-                    if (($index + 1) < count($types)) {
-                        $str .= '|';
+                $convertedTypes = [];
+
+                foreach ($types as $subType) {
+                    $convertedType = $this->convertType($subType);
+                    // Deduplicate types (e.g., array<string, X> and array<int, Y> both become 'array')
+                    if (!in_array($convertedType, $convertedTypes, true)) {
+                        $convertedTypes[] = $convertedType;
                     }
                 }
 
-                return $str;
+                return implode('|', $convertedTypes);
             case BackedEnumType::class:
                 /** @var BackedEnumType $type */
                 return '\\'.$type->getClassName();
