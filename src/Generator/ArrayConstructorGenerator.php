@@ -9,7 +9,7 @@ class ArrayConstructorGenerator
 {
     protected static $template =
 '
-    public function arrayConstruct()
+    public function arrayConstruct(): void
     {
         <collections>
     }
