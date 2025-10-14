@@ -2,7 +2,7 @@
 namespace Tbn\GetterTraitBundle\Tests\src\Entity;
 trait MyClassTrait
 {
-    public function arrayConstruct()
+    public function arrayConstruct(): void
     {
         $this->foreignClasses = new \Doctrine\Common\Collections\ArrayCollection();
         $this->references = [];
