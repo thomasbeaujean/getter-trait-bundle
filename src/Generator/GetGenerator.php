@@ -34,14 +34,7 @@ class GetGenerator
         $convertedType = $this->typeConverter->convertType($type);
 
         if ($type instanceof CollectionType) {
-            $initString = $type->__toString();
-            $initString = str_replace(',App', ',\\App', $initString);
-            $initString = str_replace(', App', ', \\App', $initString);
-            $initString = str_replace('<App', '<\\App', $initString);
-            $initString = str_replace(',Tbn', ',\\Tbn', $initString);
-            $initString = str_replace(', Tbn', ', \\Tbn', $initString);
-            $initString = str_replace('Doctrine', '\\Doctrine', $initString);
-            $initString = str_replace('Symfony', '\\Symfony', $initString);
+            $initString = $this->typeConverter->convertCollectionDockblockType($type);
 
             $dockblock = <<< EOT
      /**

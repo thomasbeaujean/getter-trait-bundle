@@ -19,7 +19,7 @@ class TypeConverter
         switch ($type::class) {
             case ObjectType::class:
                 /** @var ObjectType $type */
-                return '\\'.$type->getClassName();
+                return '\\' . $type->getClassName();
             case BuiltinType::class:
                 /** @var BuiltinType $type */
                 return $type->__toString();
@@ -39,10 +39,10 @@ class TypeConverter
                 return implode('|', $convertedTypes);
             case BackedEnumType::class:
                 /** @var BackedEnumType $type */
-                return '\\'.$type->getClassName();
+                return '\\' . $type->getClassName();
             case EnumType::class:
                 /** @var EnumType $type */
-                return '\\'.$type->getClassName();
+                return '\\' . $type->getClassName();
             case CollectionType::class:
                 /** @var CollectionType $type */
                 if ($type->isList()) {
@@ -55,9 +55,23 @@ class TypeConverter
                 return $this->convertType($type->getWrappedType());
             case NullableType::class:
                 /** @var NullableType $type */
-                return $this->convertType($type->getWrappedType()).'|null';
+                return $this->convertType($type->getWrappedType()) . '|null';
         }
 
-        throw new \LogicException('Class '.$type::class.' not handled');
+        throw new \LogicException('Class ' . $type::class . ' not handled');
+    }
+
+    public function convertCollectionDockblockType(CollectionType $type): string
+    {
+        $initString = $type->__toString();
+        $initString = str_replace(',App', ',\\App', $initString);
+        $initString = str_replace(', App', ', \\App', $initString);
+        $initString = str_replace('<App', '<\\App', $initString);
+        $initString = str_replace(',Tbn', ',\\Tbn', $initString);
+        $initString = str_replace(', Tbn', ', \\Tbn', $initString);
+        $initString = str_replace('Doctrine', '\\Doctrine', $initString);
+        $initString = str_replace('Symfony', '\\Symfony', $initString);
+
+        return $initString;
     }
 }

@@ -43,6 +43,9 @@ trait MyClassTrait
         return $this->name;
     }
 
+    /**
+     * @param \Doctrine\Common\Collections\Collection<int|string, \Tbn\GetterTraitBundle\Tests\src\Entity\ForeignClass> $value
+     */
     public function setForeignClasses(\Doctrine\Common\Collections\Collection $value): void
     {
         $this->foreignClasses = $value;
@@ -66,6 +69,9 @@ trait MyClassTrait
         $this->foreignClasses->removeElement($value);
     }
 
+    /**
+     * @param list<int> $value
+     */
     public function setReferences(array $value): void
     {
         $this->references = $value;
