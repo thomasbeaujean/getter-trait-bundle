@@ -111,6 +111,11 @@ namespace <namespace>;
         $methods = [];
 
         foreach ($reflectionClass->getProperties() as $property) {
+            // do not handle inherited properties
+            if ($property->getDeclaringClass()->getName() !== $reflectionClass->getName()) {
+                continue;
+            }
+
             $propertyName = $property->getName();
             $this->logger->info('PROPERTY: '.$propertyName);
             $type = $this->extractor->getType($reflectionClass->getName(), $propertyName);
