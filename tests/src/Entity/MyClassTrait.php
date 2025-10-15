@@ -2,7 +2,7 @@
 namespace Tbn\GetterTraitBundle\Tests\src\Entity;
 trait MyClassTrait
 {
-    public function arrayConstruct()
+    public function arrayConstruct(): void
     {
         $this->foreignClasses = new \Doctrine\Common\Collections\ArrayCollection();
         $this->references = [];
@@ -49,7 +49,7 @@ trait MyClassTrait
     }
 
     /**
-     * @return \Doctrine\Common\Collections\Collection<int|string,\Tbn\GetterTraitBundle\Tests\src\Entity\ForeignClass>
+     * @return \Doctrine\Common\Collections\Collection<int|string, \Tbn\GetterTraitBundle\Tests\src\Entity\ForeignClass>
      */
     public function getForeignClasses(): \Doctrine\Common\Collections\Collection
     {
@@ -72,7 +72,7 @@ trait MyClassTrait
     }
 
     /**
-     * @return array<int,int>
+     * @return list<int>
      */
     public function getReferences(): array
     {

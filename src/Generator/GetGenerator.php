@@ -39,6 +39,7 @@ class GetGenerator
             $initString = str_replace(', App', ', \\App', $initString);
             $initString = str_replace('<App', '<\\App', $initString);
             $initString = str_replace(',Tbn', ',\\Tbn', $initString);
+            $initString = str_replace(', Tbn', ', \\Tbn', $initString);
             $initString = str_replace('Doctrine', '\\Doctrine', $initString);
             $initString = str_replace('Symfony', '\\Symfony', $initString);
 
