@@ -70,7 +70,7 @@ trait MyClassTrait
     }
 
     /**
-     * @param list<int> $value
+     * @param array<int> $value
      */
     public function setReferences(array $value): void
     {
@@ -78,7 +78,7 @@ trait MyClassTrait
     }
 
     /**
-     * @return list<int>
+     * @return array<int>
      */
     public function getReferences(): array
     {

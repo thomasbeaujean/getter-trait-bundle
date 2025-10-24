@@ -71,6 +71,7 @@ class TypeConverter
         $initString = str_replace(', Tbn', ', \\Tbn', $initString);
         $initString = str_replace('Doctrine', '\\Doctrine', $initString);
         $initString = str_replace('Symfony', '\\Symfony', $initString);
+        $initString = str_replace('list', 'array', $initString);
 
         return $initString;
     }
