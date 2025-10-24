@@ -17,7 +17,15 @@ class RemoveGenerator
         '
     public function <methodName>(<type> $value): void
     {
-        $this-><fieldName> = array_diff($this-><fieldName>, [$value]);
+        $data = array_filter(
+            $this-><fieldName>,
+            function ($item) use ($value) {
+                return $item !== $value;
+            }
+        );
+
+        // re-index array to avoid orphan keys
+        $this-><fieldName> = array_values($data);
     }
 ';
 

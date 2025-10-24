@@ -92,6 +92,13 @@ trait MyClassTrait
 
     public function removeReference(int $value): void
     {
-        $this->references = array_diff($this->references, [$value]);
+        $data = array_filter(
+            $this->references,
+            function ($item) use ($value) {
+                return $item !== $value;
+            }
+        );
+        // re-index array to avoid orphan keys
+        $this->references = array_values($data);
     }
 }
