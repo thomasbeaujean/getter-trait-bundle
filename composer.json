@@ -13,17 +13,17 @@
     },
     "license": "MIT",
     "require": {
-        "php": "^8.2",
-        "symfony/framework-bundle": "^7.2",
+        "php": "^8.4",
+        "symfony/framework-bundle": "^7.2|^8.0",
         "phpdocumentor/type-resolver": "^1.4",
-        "symfony/property-info": "^7.2",
+        "symfony/property-info": "^7.2|^8.0",
         "phpdocumentor/reflection-docblock": "^5.4.1",
-        "symfony/string": "^7.2"
+        "symfony/string": "^7.2|^8.0"
     },
     "require-dev": {
         "nyholm/symfony-bundle-test": "^3.0",
         "phpunit/phpunit": "^10.3",
-        "symfony/uid": "^7.2",
+        "symfony/uid": "^7.2|^8.0",
         "doctrine/collections": "^2.1",
         "doctrine/inflector": "^2.0"
     }
