@@ -15,7 +15,7 @@
     "require": {
         "php": "^8.4",
         "symfony/framework-bundle": "^7.2|^8.0",
-        "phpdocumentor/type-resolver": "^1.4",
+        "phpdocumentor/type-resolver": "^1.4|^2",
         "symfony/property-info": "^7.2|^8.0",
         "phpdocumentor/reflection-docblock": "^5.4.1|^6",
         "symfony/string": "^7.2|^8.0"
